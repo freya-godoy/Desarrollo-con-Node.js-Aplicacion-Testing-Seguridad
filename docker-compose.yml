@@ -1,0 +1,39 @@
+version: '3.3'
+
+services:
+  # postgres: especificamos el servicio que vamos a usar
+  postgres:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=proyecto-my-api
+      - POSTGRES_USER=gatito
+      - POSTGRES_PASSWORD=gatito123 #enviroment: variables de entorno
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+      #Los volumenes: nos ayudan a crear una carpeta que persista la informacion por ejemplo de nuestra base de dato
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=gatito@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=gatito123
+    ports:
+      - 5050:80
+  mysql:
+    image: mysql:5
+    environment:
+      - MYSQL_DATABASE=proyecto-my-api
+      - MYSQL_ROOT_PASSWORD=gatito123
+      - MYSQL_PORT=3306
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - MYSQL_ROOT_PASSWORD=gatito123
+      - PMA_HOST=mysql
+    ports:
+      - 8080:80
